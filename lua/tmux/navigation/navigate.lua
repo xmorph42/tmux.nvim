@@ -33,6 +33,8 @@ function M.to(direction)
         tmux.change_pane(direction)
     elseif is_nvim_border and options.navigation.cycle_navigation then
         nvim.wincmd(opposite_directions[direction], 999)
+    elseif is_nvim_border and not M.has_tmux_target(direction) then
+        tmux.i3_navigate(direction)
     elseif not is_nvim_border then
         nvim.wincmd(direction, vim.v.count)
     end

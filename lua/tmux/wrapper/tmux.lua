@@ -62,6 +62,15 @@ function M.change_pane(direction)
     execute(string.format("select-pane -t '%s' -%s", get_tmux_pane(), tmux_directions[direction]))
 end
 
+function M.i3_navigate(direction)
+   local command = string.format("%s/bin/i3_tmux-navigator.sh force-i3 %s", os.getenv("HOME"),
+      tmux_directions[direction])
+
+   local handle = assert(io.popen(command), string.format("unable to execute: [%s]", command))
+   result = handle:read("*a")
+   handle:close()
+end
+
 function M.get_buffer(name)
     return execute(string.format("show-buffer -b %s", name))
 end
